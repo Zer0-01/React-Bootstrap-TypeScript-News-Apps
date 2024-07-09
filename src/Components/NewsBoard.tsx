@@ -8,14 +8,18 @@ interface Article {
   url: string;
 }
 
-const NewsBoard = () => {
+interface NewsBoardProps {
+  category: string;
+}
+
+const NewsBoard: React.FC<NewsBoardProps> = ({category}) => {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    const url = `https://newsapi.org/v2/top-headlines?country=my&apiKey=${import.meta.env.VITE_API_KEY}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${import.meta.env.VITE_API_KEY}`;
     fetch(url).then(response => response.json()).then(data => setArticles(data.articles));
 
-  }, [])
+  }, [category])
   return (
     <div>
       <h2 className="text-center">Latest <span className="badge bg-danger" >News</span></h2>
